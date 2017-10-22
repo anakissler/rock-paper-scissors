@@ -9,11 +9,19 @@ import edu.cnm.deepdive.ca.rps.R;
 import edu.cnm.deepdive.ca.rps.models.Terrain;
 import edu.cnm.deepdive.ca.rps.views.TerrainView;
 
+/**
+ *
+ * Activity class for Deadlock(Rock-Paper-Scissors) cellular automaton.
+ *Public class terrain activity which extends the base AppCompatActivity
+ * class for activities that use the support library action bar features.
+ */
 public class TerrainActivity extends AppCompatActivity {
 
-
-  private static final int RUNNER_THREAD_REST = 40;
+/** Initializing rest execution of thread for a specific period.**/
+private static final int RUNNER_THREAD_REST = 40;
+/** Initializing sleep execution of thread for a specific period.**/
   private static final int RUNNER_THREAD_SLEEP = 50;
+
 
   private boolean running = false;
   private boolean inForeground = false;
@@ -78,29 +86,43 @@ public class TerrainActivity extends AppCompatActivity {
     return true;
   }
 
+  /**
+   * Instantiates a new Terrain object with a reference name terrain.
+   * Calls the initialize() method inherited from Terrain model to create a lattice with
+   * randomly assigned instance of Breed.
+   */
   private void initializeModel() {
     terrain = new Terrain();
     terrain.initialize();
   }
-
+/** Defining the variable terrain View that implements User Interface **/
+/*** Assign values for terrainLayout and terrainView objects.**/
   private void initializeUserInterface() {
     terrainLayout = findViewById(R.id.terrainLayout);
     terrainView = (TerrainView) findViewById(R.id.terrainView);
 
   }
-
+/** Accessor/Getter for Running method
+ * @return on or off flag**/
   private synchronized boolean isRunning() {
     return running;
   }
-
+/** Mutator/Setter for running method
+ * @return on or off flag**/
   private synchronized void setRunning(boolean running) {
     this.running = running;
   }
-
+ /** Returns the currently specified value of inForeground field based whether the app is paused,
+    running or resetting. **/
   private synchronized boolean isInForeground() {
     return inForeground;
   }
-
+  /**
+   * Sets the value of inForeground to be used as a flag to determine whether to reset, pause, or
+   * run the app.
+   *
+   * @param inForeground on or off flag
+   */
   private synchronized void setInForeground(boolean inForeground) {
     if (inForeground) {
       this.inForeground = true;
@@ -120,7 +142,9 @@ public class TerrainActivity extends AppCompatActivity {
       runner = null;
     }
   }
-
+/**
+ *Determines the state of the runner thread and setting the thread to rest or sleep
+ * based upon isRunning and isInForeground condition. **/
   private class Runner extends Thread {
 
     @Override
